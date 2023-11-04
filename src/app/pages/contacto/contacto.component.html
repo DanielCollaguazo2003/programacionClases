@@ -6,8 +6,10 @@
     
     <label for="txtNombre">Nombre</label>
     <input id="txtNombre" name="txtNombre" [(ngModel)]="persona.name">
-
+    <button (click)="savePersona()">Guardar Persona</button>
 </form>
-<button (click)="savePersona()">Acerca de</button>
+
+<button (click)="goAcerca()">Acerca de</button>
+<button (click)="goListado()">Listado</button>
 
 {{persona.name}} - {{persona.id}}
