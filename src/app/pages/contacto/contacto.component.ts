@@ -16,31 +16,46 @@ export class ContactoComponent {
 
   constructor(private router: Router,
     private contactoServices: ContactosService,
-    private contactoFirebaseService: ContactoFirebaseService){
+    private contactoFirebaseService: ContactoFirebaseService) {
 
-      let params = this.router.getCurrentNavigation()?.extras.queryParams;
-      if(params){
-        console.log(params)
-        this.persona = params['contacto']
+    let params = this.router.getCurrentNavigation()?.extras.queryParams;
+    if (params) {
+      console.log(params)
+      this.persona = params['contacto']
 
-      }
+    }
   }
 
-  savePersona(){
-    this.contactoServices.addContacto(this.persona)
+  savePersona() {
+    if (!this.persona.uid) {
+      /*Guardar a la persona en caso de ser una nueva persona*/
+      this.contactoServices.addContacto(this.persona)
+      console.log('contacots', this.contactoServices.getContactos())
+      this.contactoFirebaseService.save(this.persona)
+      this.persona = new Persona();
 
-    console.log('contacots', this.contactoServices.getContactos())
-
-    this.contactoFirebaseService.save(this.persona)
-    this.persona = new Persona();
+    }else{
+      /*En caso de que la persona ya exista, solo se actualizara*/
+      this.contactoFirebaseService.update(this.persona);
+      this.persona = new Persona();
+    }
   }
 
-  goAcerca(){
+  eliminarPersona(){
+    if(!this.persona.uid){
+      alert('No seleccionada ninguna persona');
+    }else {
+      this.contactoFirebaseService.delete(this.persona);
+      this.persona = new Persona();
+    }
+  }
+
+  goAcerca() {
     console.log("llamando acerca de ", this.persona)
     this.router.navigate(['paginas/acerca'])
   }
 
-  goListado(){
+  goListado() {
     this.router.navigate(['paginas/listado-contactos'])
   }
 }

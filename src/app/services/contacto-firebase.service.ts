@@ -23,11 +23,24 @@ export class ContactoFirebaseService {
     return this.contactosRef.valueChanges()
   }
 
+  generateUid(){
+    const uid = this.db.createId();
+    return uid;
+  }
+
   save(persona: Persona){
     const uid = this.db.createId()
     persona.uid = uid
     console.log('persona', persona)
-    return this.contactosRef.doc(uid).set(Object.assign({}, persona))
+    return this.contactosRef.doc(uid).set(Object.assign({}, persona));
+  }
+
+  update(persona: Persona){
+    return this.contactosRef.doc(persona.uid).update(Object.assign({}, persona));
+  }
+
+  delete(persona: Persona){
+    return this.contactosRef.doc(persona.uid).delete();
   }
 
   getPersona(uid: string){
