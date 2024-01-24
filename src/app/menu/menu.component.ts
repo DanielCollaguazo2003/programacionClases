@@ -10,5 +10,7 @@ export class MenuComponent {
     {title: 'Acerca de', path: 'paginas/acerca'},
     {title: 'Contacto', path: 'paginas/contacto'},
     {title: 'Listado', path: 'paginas/listado-contacts'},
+    {title: 'Clientes', path: 'paginas/clientes'},
+    {title: 'Facturas', path: 'paginas/facturas'},
   ]
 }

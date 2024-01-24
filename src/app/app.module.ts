@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { AcercadeComponent } from './pages/acercade/acercade.component';
 import { ContactoComponent } from './pages/contacto/contacto.component';
 import { MenuComponent } from './menu/menu.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaContactosComponent } from './pages/lista-contactos/lista-contactos.component';
 import { ViewContactoComponent } from './pages/view-contacto/view-contacto.component';
 
@@ -14,9 +14,16 @@ import { ViewContactoComponent } from './pages/view-contacto/view-contacto.compo
 ///firebase
 import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { FIREBASE_APP_NAME, FIREBASE_OPTIONS } from '@angular/fire/compat';
+import { AngularFireModule, FIREBASE_APP_NAME, FIREBASE_OPTIONS } from '@angular/fire/compat';
 import { environment } from './environments/environments';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+
+//Integracion con jakarta
+import { HttpClientModule } from '@angular/common/http';
+import { ClientesComponent } from './pages/clientes/clientes.component';
+import { FacturasComponent } from './pages/facturas/facturas.component';
+
 
 @NgModule({
   declarations: [
@@ -25,11 +32,14 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     ContactoComponent,
     MenuComponent,
     ListaContactosComponent,
-    ViewContactoComponent
+    ViewContactoComponent,
+    ClientesComponent,
+    FacturasComponent
   ],
   imports: [
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    AngularFirestoreModule.enablePersistence(),  //para la conexion con el firebase y serviceworker
     BrowserModule,
     AppRoutingModule,
     FormsModule,
@@ -39,6 +49,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
     }),
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [{ provide: FIREBASE_OPTIONS, useValue: environment.firebaseConfig }],
   bootstrap: [AppComponent]

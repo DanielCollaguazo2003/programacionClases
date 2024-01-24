@@ -7,5 +7,8 @@ export const environment = {
       messagingSenderId: "531198828514",
       appId: "1:531198828514:web:32d13183804150942d63bb",
       measurementId: "G-S1MP9CNHKW"
-    }
+    },
+
+    //Integracion con jakarta
+    WS_PATH: 'http://localhost:8080/demo63/rs'
 };

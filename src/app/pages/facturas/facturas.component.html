@@ -1,0 +1,85 @@
+<section class="factura-container">
+  <div class="informacion-container">
+    <div form-container>
+      <label> Numero de factura</label>
+      <p>01010101010</p>
+
+      <label>Fecha de Emision</label>
+      <p>date</p>
+    </div>
+
+    <div class="cliente-seleccion">
+      <select name="clientes" (change)="changeCliente($event)">
+        <option>-----Seleccione-----</option>
+        <option [value]="cli.codigo" *ngFor="let cli of clientes | async">
+          {{ cli.nombre }}
+        </option>
+      </select>
+      <div class="info-cliente" *ngIf="cliente">
+        {{ cliente.codigo }}
+        {{ cliente.dni }}
+        {{ cliente.nombre }}
+        {{ cliente.direccion }}
+      </div>
+    </div>
+  </div>
+
+  <section class="detalle-container">
+    <h2>Ingresar detalle</h2>
+    <form [formGroup]="form" class="form">
+      <div class="entrada-1">
+        <label>Nombre</label>
+        <input
+          type="text"
+          name="input-nombre"
+          placeholder="Ingrese el nombre"
+          formControlName="nombre"
+        />
+      </div>
+
+      <div class="entrada-2">
+        <label>Cantidad</label>
+        <input type="number" name="input-cantidad" formControlName="cantidad" />
+      </div>
+
+      <div class="entrada-3">
+        <label>Precio</label>
+        <input type="number" name="input-precio" formControlName="precio" />
+        <p>$</p>
+      </div>
+
+      <button (click)="agregarDetalle()">Agregar</button>
+    </form>
+  </section>
+
+  <div class="precio">
+    <h3>Precio</h3>
+    <p>19292929</p>
+  </div>
+
+  <button (click)="guardarFactura()">Crear factura</button>
+</section>
+
+<hr/>
+<table>
+  <tr>
+    <th>Codigo</th>
+    <th>cliente</th>
+    <th>fecha</th>
+    <th>numero</th>
+    <th>precio</th>
+    <th>detalles</th>
+  </tr>
+  <tr *ngFor="let fac of facturas | async">
+    <td>{{fac.codigo}}</td>
+    <td>{{fac.cliente.nombre}}</td>
+    <td>{{fac.numero}}</td>
+    <td>{{fac.fechaEmision}}</td>
+    <td>{{fac.total}}</td>
+    <td >
+      <ul *ngFor="let det of fac.detalles" >
+        <li>{{det.nombre}}</li>
+      </ul>
+    </td>
+  </tr>
+</table>
